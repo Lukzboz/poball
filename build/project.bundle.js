@@ -83068,6 +83068,10 @@ var _defaultBlock = __webpack_require__(990);
 
 var _defaultBlock2 = _interopRequireDefault(_defaultBlock);
 
+var _gameBall = __webpack_require__(991);
+
+var _gameBall2 = _interopRequireDefault(_gameBall);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var config = {
@@ -83075,28 +83079,49 @@ var config = {
     parent: 'phaser-example',
     width: 800,
     height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: { y: 100 }
+        }
+    },
     scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
     }
 };
 
 var game = new Phaser.Game(config);
+
 var blockPre = new _defaultBlock2.default();
+var ballPre = new _gameBall2.default();
+var blocks = [];
+var ball;
 
 function preload() {
     this.load.image(blockPre.sprite, blockPre.image);
+    this.load.image(ballPre.sprite, ballPre.image);
 }
 
 function create() {
-    var blocks = [];
+
     for (var j = 0; j < 4; j++) {
         for (var i = 0; i < 8; i++) {
-            console.log(i);
-            blocks[i] = this.add.image(j * 100 + i * 50, 100 + j * 100, blockPre.sprite);
+            blocks[i + j * 8] = this.physics.add.staticImage(j * 100 + i * 50, 100 + j * 120, blockPre.sprite);
         }
     }
-    //this.add.image( 50, 100, blockPre.sprite );
+
+    ball = this.physics.add.image(25, 25, ballPre.sprite);
+    //ball.setCircle(25)
+    ball.setCollideWorldBounds(true);
+    ball.setBounce(1, 1);
+    ball.setVelocity(100);
+}
+
+function update() {
+    this.physics.world.collide(ball, blocks);
 }
 
 /***/ }),
@@ -132709,6 +132734,24 @@ function defaultBlock() {
 	this.height = 50;
 	this.sprite = 'block';
 	this.image = 'assets/blocks/block.png';
+}
+
+/***/ }),
+/* 991 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.default = defaultBlock;
+function defaultBlock() {
+	this.width = 50;
+	this.height = 50;
+	this.sprite = 'ball';
+	this.image = 'assets/blocks/gameBall.png';
 }
 
 /***/ })
