@@ -1,0 +1,95 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "phaser3-project-template",
+        "scope": null,
+        "escapedName": "phaser3-project-template",
+        "name": "phaser3-project-template",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "D:\\Work\\Workspace\\poball\\www"
+    ]
+  ],
+  "_from": "phaser3-project-template@latest",
+  "_id": "phaser3-project-template@1.0.1",
+  "_inCache": true,
+  "_location": "/phaser3-project-template",
+  "_nodeVersion": "6.4.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/phaser3-project-template-1.0.1.tgz_1506511071761_0.23187125427648425"
+  },
+  "_npmUser": {
+    "name": "photonstorm",
+    "email": "rdavey@gmail.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "phaser3-project-template",
+    "scope": null,
+    "escapedName": "phaser3-project-template",
+    "name": "phaser3-project-template",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/phaser3-project-template/-/phaser3-project-template-1.0.1.tgz",
+  "_shasum": "4c95cef882636493d3c67446118301ee34a42ac2",
+  "_shrinkwrap": null,
+  "_spec": "phaser3-project-template",
+  "_where": "D:\\Work\\Workspace\\poball\\www",
+  "author": {
+    "name": "Richard Davey",
+    "email": "rdavey@gmail.com",
+    "url": "http://www.photonstorm.com"
+  },
+  "bugs": {
+    "url": "https://github.com/photonstorm/phaser3-project-template/issues"
+  },
+  "dependencies": {},
+  "description": "A Phaser 3 Project Template",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "live-server": "^1.2.0",
+    "phaser": "^3.0.0-beta.4",
+    "raw-loader": "^0.5.1",
+    "webpack": "^3.4.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "4c95cef882636493d3c67446118301ee34a42ac2",
+    "tarball": "https://registry.npmjs.org/phaser3-project-template/-/phaser3-project-template-1.0.1.tgz"
+  },
+  "gitHead": "4fd882c02a16ec256c7a63e03c5cc44c46472c1f",
+  "homepage": "https://github.com/photonstorm/phaser3-project-template#readme",
+  "license": "MIT",
+  "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+  "main": "src/index.js",
+  "maintainers": [
+    {
+      "name": "photonstorm",
+      "email": "rdavey@gmail.com"
+    }
+  ],
+  "name": "phaser3-project-template",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/photonstorm/phaser3-project-template.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "npm run build && node_modules/.bin/live-server --port=8000"
+  },
+  "version": "1.0.1"
+}
