@@ -132714,6 +132714,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var objects = {};
+objects.gameBall = _gameBall2.default;
+objects.defaultBlock = _defaultBlock2.default;
+
 var level = function (_Phaser$Scene) {
 	_inherits(level, _Phaser$Scene);
 
@@ -132722,38 +132726,54 @@ var level = function (_Phaser$Scene) {
 
 		var _this = _possibleConstructorReturn(this, (level.__proto__ || Object.getPrototypeOf(level)).call(this, { key: 'level' }));
 
-		_this.ball;
-		_this.blocks = [];
-		_this.ball = new _gameBall2.default(_this.game);
-		_this.blockPre = new _defaultBlock2.default(_this.game, _this.ball);
+		_this.items = [];
+		_this.gameball;
+		_this.gameConfig;
+		_this.getBlocks();
 		return _this;
 	}
 
 	_createClass(level, [{
 		key: 'getBlocks',
-		value: function getBlocks() {}
+		value: function getBlocks() {
+			this.gameConfig = [{ type: 'gameBall', x: 0, y: 1 }, { type: 'defaultBlock', x: 0, y: 2 }, { type: 'defaultBlock', x: 1, y: 2 }, { type: 'defaultBlock', x: 2, y: 2 }, { type: 'defaultBlock', x: 3, y: 2 }, { type: 'defaultBlock', x: 4, y: 2 }, { type: 'defaultBlock', x: 5, y: 2 }, { type: 'defaultBlock', x: 6, y: 2 }, { type: 'defaultBlock', x: 7, y: 2 }, { type: 'defaultBlock', x: 1, y: 4 }, { type: 'defaultBlock', x: 2, y: 4 }, { type: 'defaultBlock', x: 3, y: 4 }, { type: 'defaultBlock', x: 4, y: 4 }, { type: 'defaultBlock', x: 5, y: 4 }, { type: 'defaultBlock', x: 6, y: 4 }, { type: 'defaultBlock', x: 7, y: 4 }, { type: 'defaultBlock', x: 8, y: 4 }, { type: 'defaultBlock', x: 2, y: 6 }, { type: 'defaultBlock', x: 3, y: 6 }, { type: 'defaultBlock', x: 4, y: 6 }, { type: 'defaultBlock', x: 5, y: 6 }, { type: 'defaultBlock', x: 6, y: 6 }, { type: 'defaultBlock', x: 7, y: 6 }, { type: 'defaultBlock', x: 8, y: 6 }, { type: 'defaultBlock', x: 9, y: 6 }, { type: 'defaultBlock', x: 3, y: 8 }, { type: 'defaultBlock', x: 4, y: 8 }, { type: 'defaultBlock', x: 5, y: 8 }, { type: 'defaultBlock', x: 6, y: 8 }, { type: 'defaultBlock', x: 7, y: 8 }, { type: 'defaultBlock', x: 8, y: 8 }, { type: 'defaultBlock', x: 9, y: 8 }, { type: 'defaultBlock', x: 10, y: 8 }];
+
+			this.gameConfig.forEach(function (val) {
+				if (val.type == 'gameBall') {
+					this.gameBall = new objects.gameBall(this, val.x * 50 + 25, val.y * 50 + 25);
+					this.items.push(this.gameBall);
+				} else {
+					this.items.push(new objects[val.type](this, val.x * 50 + 25, val.y * 50 + 25, this.gameBall));
+				}
+			}, this);
+		}
 	}, {
 		key: 'preload',
 		value: function preload() {
 
-			this.ball.preload();
-			this.blockPre.preload();
+			this.items.forEach(function (val) {
+				val.preload();
+			});
 		}
 	}, {
 		key: 'create',
 		value: function create() {
 
-			this.ball.create();
-
-			for (var j = 0; j < 4; j++) {
-				for (var i = 0; i < 8; i++) {
-					//blocks[i + j*8] = this.game.physics.add.staticImage( j*100 + i*50, 100 + j*120, blockPre.sprite );
-					blocks[i + j * 8] = new dafaultBlock(this.game, this.ball);
-					blocks[i + j * 8].setPosition(j * 100 + i * 50 + 25, 100 + j * 120);
-					blocks[i + j * 8].create();
-				}
-			}
-
+			this.items.forEach(function (val) {
+				val.create();
+			});
+			/*
+   this.ball.create();
+   
+   for (var j = 0; j < 4; j++) {
+       for (var i = 0; i < 8; i++) {
+       	//blocks[i + j*8] = this.game.physics.add.staticImage( j*100 + i*50, 100 + j*120, blockPre.sprite );
+       	blocks[i + j*8] = new dafaultBlock(this.game, this.ball);
+       	blocks[i + j*8].setPosition(j*100 + i*50 + 25, 100 + j*120);
+       	blocks[i + j*8].create();
+       }
+   }
+   */
 			/*
       ball = this.game.physics.add.image( 25, 25, ballPre.sprite );
       //ball.setCircle(25)
@@ -132764,7 +132784,11 @@ var level = function (_Phaser$Scene) {
 		}
 	}, {
 		key: 'update',
-		value: function update() {}
+		value: function update() {
+			this.items.forEach(function (val) {
+				val.update();
+			});
+		}
 	}]);
 
 	return level;
@@ -132783,12 +132807,12 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = defaultBlock;
-function defaultBlock(game, ball) {
+function defaultBlock(game, x, y, ball) {
 	this.game = game;
 	this.width = 50;
 	this.height = 50;
-	this.x;
-	this.y;
+	this.x = x;
+	this.y = y;
 	this.sprite = 'block';
 	this.image = 'assets/blocks/block.png';
 	this.gameBall = ball;
@@ -132804,11 +132828,12 @@ function defaultBlock(game, ball) {
 	};
 
 	this.create = function () {
-		this.gameObject = this.game.physics.add.staticImage(this.x, thix.y, this.sprite);
+		this.gameObject = this.game.physics.add.staticImage(this.x, this.y, this.sprite);
 	};
 
 	this.update = function () {
-		this.game.physics.world.collide(this.gameBall, this.gameObject);
+		console.log(this.gameBall);
+		this.game.physics.world.collide(this.gameBall.gameObject, this.gameObject);
 	};
 }
 
@@ -132823,16 +132848,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = defaultBlock;
-function defaultBlock(game) {
+function defaultBlock(game, x, y) {
 	this.game = game;
 	this.width = 50;
 	this.height = 50;
 	this.sprite = 'ball';
 	this.image = 'assets/blocks/gameBall.png';
-	this.x;
-	this.y;
+	this.x = x;
+	this.y = y;
 	this.gameObject;
-	console.log(this.game);
 
 	this.setPosition = function (x, y) {
 		this.x = x;
@@ -132840,12 +132864,11 @@ function defaultBlock(game) {
 	};
 
 	this.preload = function () {
-		console.log(this.game);
 		this.game.load.image(this.sprite, this.image);
 	};
 
 	this.create = function () {
-		this.gameObject = this.game.physics.add.image(25, 25, ballPre.sprite);
+		this.gameObject = this.game.physics.add.image(25, 25, this.sprite);
 
 		this.gameObject.setCollideWorldBounds(true);
 		this.gameObject.setBounce(1, 1);

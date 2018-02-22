@@ -1,10 +1,10 @@
 
-export default function defaultBlock(game, ball) {
+export default function defaultBlock(game, x, y, ball) {
 	this.game = game;
 	this.width = 50;
 	this.height = 50;
-	this.x;
-	this.y;
+	this.x = x;
+	this.y = y;
 	this.sprite = 'block';
 	this.image = 'assets/blocks/block.png';
 	this.gameBall = ball;
@@ -20,10 +20,11 @@ export default function defaultBlock(game, ball) {
 	};
 	
 	this.create = function() {
-		this.gameObject = this.game.physics.add.staticImage(this.x, thix.y, this.sprite);
+		this.gameObject = this.game.physics.add.staticImage(this.x, this.y, this.sprite);
 	};
 	
 	this.update = function() {
-		this.game.physics.world.collide(this.gameBall, this.gameObject);
+		console.log (this.gameBall);
+		this.game.physics.world.collide(this.gameBall.gameObject, this.gameObject);
 	};
 }
