@@ -1,0 +1,29 @@
+
+export default function defaultBlock(game, ball) {
+	this.game = game;
+	this.width = 50;
+	this.height = 50;
+	this.x;
+	this.y;
+	this.sprite = 'block';
+	this.image = 'assets/blocks/block.png';
+	this.gameBall = ball;
+	this.gameObject;
+	
+	this.setPosition = function(x, y) {
+		this.x = x;
+		this.y = y;
+	};
+	
+	this.preload = function() {
+		this.game.load.image(this.sprite, this.image);
+	};
+	
+	this.create = function() {
+		this.gameObject = this.game.physics.add.staticImage(this.x, thix.y, this.sprite);
+	};
+	
+	this.update = function() {
+		this.game.physics.world.collide(this.gameBall, this.gameObject);
+	};
+}
